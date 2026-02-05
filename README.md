@@ -10,7 +10,6 @@ Interactive dashboards for monitoring ClickHouse clusters via Rill.
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
 - [Deployment](#deployment)
-- [Suggestions & Roadmap](#suggestions--roadmap)
 - [Contributing](#contributing)
 - [Support](#support)
 - [License](#license)
