@@ -1,0 +1,13 @@
+# clickhouse-system-analytics: Connector settings for ClickHouse cluster.
+# Licensed under Apache-2.0.
+type: connector
+
+driver: clickhouse
+host: '{{ .env.connector.clickhouse.host }}'
+username: '{{ .env.connector.clickhouse.username }}'
+password: '{{ .env.connector.clickhouse.password }}'
+cluster: '{{ .env.connector.clickhouse.cluster }}'
+database: default
+mode: readwrite
+port: 9440
+ssl: true

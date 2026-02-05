@@ -1,0 +1,17 @@
+compiler: rillv1
+
+title: 'ClickHouse System Analytics'
+
+# Refresh models every hour
+models:
+  refresh:
+    cron: '10 * * * *'
+
+# Example mock users for testing security policies
+mock_users:
+  - email: admin@yourcompany.com
+  - email: viewer@yourcompany.com
+
+ignore_paths:
+  - /.scratch
+  - /.github

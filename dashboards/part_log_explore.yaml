@@ -1,0 +1,9 @@
+# clickhouse-system-analytics: Explore dashboard for Part Log metrics
+# Licensed under Apache-2.0.
+type: explore
+
+title: 'Part Log'
+metrics_view: 'part_log_metrics'
+
+dimensions: '*'
+measures: '*'

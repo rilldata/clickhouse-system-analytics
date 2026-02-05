@@ -1,0 +1,9 @@
+# clickhouse-system-analytics: Explore dashboard for Parts metrics
+# Licensed under Apache-2.0.
+type: explore
+
+title: 'Parts'
+metrics_view: 'parts_metrics'
+
+dimensions: '*'
+measures: '*'

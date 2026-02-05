@@ -1,0 +1,90 @@
+# clickhouse-system-analytics: Metrics view for ClickHouse parts
+# Licensed under Apache-2.0.
+version: 1
+type: metrics_view
+display_name: 'Parts'
+model: 'rill_parts'
+timeseries: __time
+
+dimensions:
+  - name: partition
+    display_name: Partition
+    column: partition
+    description: 'The partition name from ClickHouse.'
+  - name: active
+    display_name: Active
+    column: active
+    description: 'A flag indicating whether the data part is active (1) or inactive (0).'
+  - name: name
+    display_name: Part Name
+    column: name
+    description: 'The name of the data part.'
+  - name: part_type
+    display_name: Part Type
+    column: part_type
+    description: "The storage format: 'Wide' or 'Compact'."
+  - name: database
+    display_name: Database
+    column: database
+    description: 'Name of the database.'
+  - name: table
+    display_name: Table
+    column: table
+    description: 'Name of the table.'
+  - name: engine
+    display_name: Engine
+    column: engine
+    description: 'The storage engine used by the table.'
+  - name: disk_name
+    display_name: Disk Name
+    column: disk_name
+    description: 'The name of the disk where the data part is stored.'
+  - name: default_compression_codec
+    display_name: Default Compression Codec
+    column: default_compression_codec
+    description: 'The default compression codec used for the data part.'
+
+measures:
+  - name: total_active_parts
+    display_name: Total Active Parts
+    expression: SUM(active)
+    description: 'Aggregate count of active data parts.'
+  - name: total_marks
+    display_name: Total Marks
+    expression: SUM(marks)
+    description: 'Total count of marks across all data parts.'
+  - name: total_rows
+    display_name: Total Rows
+    expression: SUM(rows)
+    description: 'Aggregate total number of rows across all data parts.'
+  - name: total_bytes_on_disk_gb
+    display_name: Total Bytes on Disk (GB)
+    expression: SUM(bytes_on_disk) / 1024 / 1024 / 1024
+    description: 'Aggregate on-disk size of all data parts in gigabytes.'
+    format_preset: humanize
+  - name: total_data_compressed_gb
+    display_name: Total Compressed Data (GB)
+    expression: SUM(data_compressed_bytes) / 1024 / 1024 / 1024
+    description: 'Total size of compressed data in gigabytes.'
+    format_preset: humanize
+  - name: total_data_uncompressed_gb
+    display_name: Total Uncompressed Data (GB)
+    expression: SUM(data_uncompressed_bytes) / 1024 / 1024 / 1024
+    description: 'Total size of uncompressed data in gigabytes.'
+    format_preset: humanize
+  - name: avg_merge_level
+    display_name: Average Merge Level
+    expression: AVG(level)
+    description: 'Average depth of the merge tree. Lower values indicate direct insertions.'
+  - name: total_primary_key_bytes_in_memory
+    display_name: Total Primary Key Bytes in Memory (MB)
+    expression: SUM(primary_key_bytes_in_memory) / 1024 / 1024
+    description: 'Total memory used by primary key values in RAM.'
+  - name: total_frozen_parts
+    display_name: Total Frozen Parts
+    expression: SUM(is_frozen)
+    description: 'Count of data parts that are frozen (backup exists).'
+  - name: total_visible_parts
+    display_name: Total Visible Parts
+    expression: SUM(visible)
+    description: 'Count of data parts marked as visible for SELECT queries.'

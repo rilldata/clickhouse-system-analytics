@@ -1,0 +1,9 @@
+# clickhouse-system-analytics: Explore dashboard for Query Log metrics
+# Licensed under Apache-2.0.
+type: explore
+
+title: 'Query Log'
+metrics_view: 'query_log_metrics'
+
+dimensions: '*'
+measures: '*'

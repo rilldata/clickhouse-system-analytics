@@ -1,0 +1,52 @@
+connector: clickhouse
+database: default
+sql: >
+  SELECT
+    toStartOfMinute(event_time) AS __time,
+    hostname,
+    query_id,
+    event_type,
+    merge_reason,
+    merge_algorithm,
+    duration_ms,
+    database,
+    table,
+    table_uuid,
+    part_name,
+    name AS alias_part_name,
+    partition_id,
+    partition,
+    part_type,
+    disk_name,
+    path_on_disk,
+    rows,
+    size_in_bytes,
+    merged_from,
+    bytes_uncompressed,
+    read_rows,
+    read_bytes,
+    peak_memory_usage,
+    error,
+    exception,
+    ProfileEvents['Merge'] AS Merge,
+    ProfileEvents['MergeExecuteMilliseconds'] AS MergeExecuteMilliseconds,
+    ProfileEvents['MergeTotalMilliseconds'] AS MergeTotalMilliseconds,
+    ProfileEvents['MergeSourceParts'] AS MergeSourceParts,
+    ProfileEvents['MergedRows'] AS MergedRows,
+    ProfileEvents['MergedUncompressedBytes'] AS MergedUncompressedBytes,
+    ProfileEvents['MergedColumns'] AS MergedColumns,
+    ProfileEvents['MutatedRows'] AS MutatedRows,
+    ProfileEvents['MutatedUncompressedBytes'] AS MutatedUncompressedBytes,
+    ProfileEvents['MutationTotalMilliseconds'] AS MutationTotalMilliseconds,
+    ProfileEvents['MutationTotalParts'] AS MutationTotalParts,
+    ProfileEvents['DiskReadElapsedMicroseconds'] AS DiskReadElapsedMicroseconds,
+    ProfileEvents['DiskWriteElapsedMicroseconds'] AS DiskWriteElapsedMicroseconds,
+    ProfileEvents['ZooKeeperCreate'] AS ZooKeeperCreate,
+    ProfileEvents['ZooKeeperGet'] AS ZooKeeperGet,
+    ProfileEvents['ZooKeeperTransactions'] AS ZooKeeperTransactions
+  FROM clusterAllReplicas('{{ .env.connector.clickhouse.cluster }}', merge('system', '^part_log'))
+
+output:
+# clickhouse-system-analytics: Model querying ClickHouse system.part_log
+# Licensed under Apache-2.0.
+connector: clickhouse

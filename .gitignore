@@ -1,0 +1,7 @@
+.env
+!.env.example
+tmp
+.DS_Store
+/.idea
+.rillcloud
+.scratch

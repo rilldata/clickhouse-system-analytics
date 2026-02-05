@@ -1,0 +1,119 @@
+# clickhouse-system-analytics: Metrics view for ClickHouse part_log
+# Licensed under Apache-2.0.
+version: 1
+type: metrics_view
+display_name: 'Part Log'
+model: 'rill_part_log'
+timeseries: __time
+
+dimensions:
+  - name: hostname
+    display_name: Hostname
+    column: hostname
+    description: 'Server hostname executing the operation.'
+  - name: query_id
+    display_name: Query ID
+    column: query_id
+    description: 'Identifier of the INSERT query that created this part.'
+  - name: event_type
+    display_name: Event Type
+    column: event_type
+    description: 'NewPart | MergeParts | MutatePart | RemovePart | etc.'
+  - name: merge_reason
+    display_name: Merge Reason
+    column: merge_reason
+    description: 'NotAMerge | RegularMerge | TTLDeleteMerge | TTLRecompressMerge'
+  - name: merge_algorithm
+    display_name: Merge Algorithm
+    column: merge_algorithm
+    description: 'Undecided | Vertical | Horizontal'
+  - name: database
+    display_name: Database
+    column: database
+    description: 'Name of the database the part belongs to.'
+  - name: table
+    display_name: Table
+    column: table
+    description: 'Name of the table the part belongs to.'
+  - name: part_name
+    display_name: Part Name
+    column: part_name
+    description: 'Name of the data part.'
+  - name: partition
+    display_name: Partition
+    column: partition
+    description: 'Partition name.'
+  - name: part_type
+    display_name: Part Type
+    column: part_type
+    description: 'Type of the part (Wide or Compact).'
+  - name: disk_name
+    display_name: Disk Name
+    column: disk_name
+    description: 'Name of the disk where the part resides.'
+  - name: error
+    display_name: Error Code
+    column: error
+    description: 'Error code of any exception.'
+  - name: exception
+    display_name: Exception Message
+    column: exception
+    description: 'Text message of the occurred error.'
+
+measures:
+  - name: total_events
+    display_name: Total Events
+    expression: COUNT(*)
+    description: 'Total number of event records.'
+  - name: sum_duration_ms
+    display_name: Sum Duration (ms)
+    expression: SUM(duration_ms)
+    description: 'Total duration of all operations in milliseconds.'
+  - name: max_duration_ms
+    display_name: Max Duration (ms)
+    expression: MAX(duration_ms)
+    description: 'Maximum duration (ms) observed.'
+  - name: avg_duration_ms
+    display_name: Avg Duration (ms)
+    expression: AVG(duration_ms)
+    description: 'Average duration (ms) across operations.'
+  - name: sum_rows
+    display_name: Sum Rows
+    expression: SUM(rows)
+    description: 'Total rows across all parts.'
+  - name: sum_size_in_bytes
+    display_name: Sum Size (bytes)
+    expression: SUM(size_in_bytes)
+    description: 'Total bytes on disk across parts.'
+  - name: sum_peak_memory_usage
+    display_name: Sum Peak Memory Usage
+    expression: SUM(peak_memory_usage)
+    description: 'Total peak memory used across merges.'
+  - name: max_peak_memory_usage
+    display_name: Max Peak Memory Usage
+    expression: MAX(peak_memory_usage)
+    description: 'Highest peak memory usage recorded.'
+  - name: sum_Merge
+    display_name: Sum Merge
+    expression: SUM(Merge)
+    description: 'Total merge operations triggered.'
+  - name: sum_MergeTotalMilliseconds
+    display_name: Sum Merge Total (ms)
+    expression: SUM(MergeTotalMilliseconds)
+    description: 'Total ms spent on all merges.'
+  - name: sum_MergedRows
+    display_name: Sum Merged Rows
+    expression: SUM(MergedRows)
+    description: 'Total rows merged across events.'
+  - name: sum_MergedUncompressedBytes_mb
+    display_name: Sum Merged Uncompressed (MB)
+    expression: SUM(MergedUncompressedBytes) / 1024 / 1024
+    description: 'Total uncompressed bytes after merges in MB.'
+  - name: sum_MutatedRows
+    display_name: Sum Mutated Rows
+    expression: SUM(MutatedRows)
+    description: 'Total rows mutated across events.'
+  - name: sum_ZooKeeperTransactions
+    display_name: Sum ZooKeeper Transactions
+    expression: SUM(ZooKeeperTransactions)
+    description: 'Total ZooKeeper transactions.'
