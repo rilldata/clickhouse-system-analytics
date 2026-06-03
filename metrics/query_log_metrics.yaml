@@ -63,6 +63,25 @@ dimensions:
     display_name: Query Table Name
     column: table_name
     description: 'Extracted table name from the query text.'
+  - name: database
+    display_name: Database
+    column: databases
+    unnest: true
+    description: "Database referenced by the query (unnested from the databases array; populated by ClickHouse from the query AST)."
+  - name: table
+    display_name: Table
+    column: tables
+    unnest: true
+    description: "Table referenced by the query (unnested from the tables array; populated by ClickHouse from the query AST, resolves through views/CTEs/subqueries)."
+  - name: column
+    display_name: Column
+    column: columns
+    unnest: true
+    description: "Column referenced by the query as database.table.column (unnested from the columns array; populated by ClickHouse from the query AST, expands SELECT *)."
+  - name: view
+    display_name: View
+    column: views
+    unnest: true
 
 measures:
   - name: avg_query_duration_ms
